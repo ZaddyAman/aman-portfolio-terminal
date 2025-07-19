@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aman Sayyad - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="gui-styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Aman Sayyad</h1>
+        <h2>Data Engineer | Database Specialist</h2>
+
+        <div id="about">
+            <h3>About Me</h3>
+        </div>
+
+        <div id="experience">
+            <h3>Experience</h3>
+        </div>
+
+        <div id="projects">
+            <h3>Projects</h3>
+        </div>
+
+        <div id="skills">
+            <h3>Skills</h3>
+        </div>
+
+        <div id="certifications">
+            <h3>Certifications</h3>
+        </div>
+
+        <div id="contact">
+            <h3>Contact</h3>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // This script will populate the GUI with data from portfolioData
+        document.addEventListener('DOMContentLoaded', function() {
+            // About
+            const aboutSection = document.getElementById('about');
+            const aboutP = document.createElement('p');
+            aboutP.textContent = portfolioData.about;
+            aboutSection.appendChild(aboutP);
+
+            // Experience
+            const experienceSection = document.getElementById('experience');
+            portfolioData.experience.forEach(exp => {
+                const expDiv = document.createElement('div');
+                expDiv.innerHTML = `
+                    <h4>${exp.title}</h4>
+                    <p>${exp.company} | ${exp.location} | ${exp.dates}</p>
+                    <ul>
+                        ${exp.details.map(detail => `<li>${detail}</li>`).join('')}
+                    </ul>
+                `;
+                experienceSection.appendChild(expDiv);
+            });
+
+            // Projects
+            const projectsSection = document.getElementById('projects');
+            portfolioData.projects.forEach(project => {
+                const projectDiv = document.createElement('div');
+                projectDiv.innerHTML = `
+                    <h4><a href="${project.link}" target="_blank">${project.name}</a></h4>
+                    <p><strong>Technologies:</strong> ${project.technologies.join(', ')}</p>
+                    <p>${project.description}</p>
+                `;
+                projectsSection.appendChild(projectDiv);
+            });
+
+            // Skills
+            const skillsSection = document.getElementById('skills');
+            Object.entries(portfolioData.skills).forEach(([category, skills]) => {
+                const skillsDiv = document.createElement('div');
+                skillsDiv.innerHTML = `
+                    <h4>${category.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</h4>
+                    <p>${skills.join(', ')}</p>
+                `;
+                skillsSection.appendChild(skillsDiv);
+            });
+
+            // Certifications
+            const certificationsSection = document.getElementById('certifications');
+            portfolioData.certifications.forEach(cert => {
+                const certDiv = document.createElement('div');
+                certDiv.innerHTML = `<p>${cert.name} - ${cert.issuer} (${cert.year})</p>`;
+                certificationsSection.appendChild(certDiv);
+            });
+
+            // Contact
+            const contactSection = document.getElementById('contact');
+            contactSection.innerHTML += `
+                <p>Email: ${portfolioData.contact.email}</p>
+                <p>LinkedIn: <a href="${portfolioData.contact.linkedin}" target="_blank">${portfolioData.contact.linkedin}</a></p>
+                <p>GitHub: <a href="${portfolioData.contact.github}" target="_blank">${portfolioData.contact.github}</a></p>
+            `;
+        });
+    </script>
+</body>
+</html>
